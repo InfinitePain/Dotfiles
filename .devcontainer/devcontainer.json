@@ -1,0 +1,32 @@
+{
+	"name": "Arch Linux Development Environment",
+	"dockerFile": "Dockerfile",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"jeff-hykin.better-cpp-syntax",
+				"aaron-bond.better-comments",
+				"ms-vscode.cpptools-extension-pack",
+				"twxs.cmake",
+				"streetsidesoftware.code-spell-checker",
+				"editorconfig.editorconfig",
+				"streetsidesoftware.code-spell-checker-german",
+				"waderyan.gitblame",
+				"github.copilot",
+				"github.github-vscode-theme",
+				"codezombiech.gitignore",
+				"eamodio.gitlens",
+				"ms-vscode.hexeditor",
+				"visualstudioexptteam.vscodeintellicode",
+				"visualstudioexptteam.intellicode-api-usage-examples",
+				"visualstudioexptteam.vscodeintellicode-completions",
+				"vscode.makefile-tools",
+				"ibm.output-colorizer",
+				"foxundermoon.shell-format",
+				"gruntfuggly.todo-tree",
+				"streetsidesoftware.code-spell-checker-turkish",
+				"vscode-icons-team.vscode-icons"
+			]
+		}
+	}
+}
