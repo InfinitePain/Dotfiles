@@ -9,7 +9,9 @@ Run pacman-key --init && \
     git \
     cmake \
     ninja \
-    ncurses
+    ncurses \
+    gdb \
+    neofetch
 
 #set non-root user
 RUN useradd -m -G wheel vs-code && \
