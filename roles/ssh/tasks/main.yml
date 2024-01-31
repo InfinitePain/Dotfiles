@@ -1,0 +1,11 @@
+---
+- name: Deploy sshd_config
+  copy:
+      src: sshd_config
+      dest: /etc/ssh/sshd_config
+      validate: "sshd -T -f %s"
+      owner: root
+      group: root
+      mode: "0644"
+  notify: restart sshd
+  become: yes
