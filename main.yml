@@ -1,0 +1,16 @@
+---
+- name: Deploy configuration files
+  hosts: localhost
+  connection: local
+  become_method: sudo
+  roles:
+      - role: bash
+        tags: bash
+      - role: sudo
+        tags: sudo
+      - role: ssh
+        tags: ssh
+
+  pre_tasks:
+      - name: Gather service facts
+        service_facts:

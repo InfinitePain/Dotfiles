@@ -1,0 +1,2 @@
+# Sudoers file for user {{ item.name }}
+{{ item.name }} ALL=(ALL:ALL) NOPASSWD: {{ item.sudo_nopasswd_commands | join(', ') }}
