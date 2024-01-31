@@ -9,17 +9,18 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-# Created by `pipx` on 2023-12-21 00:58:19
-export PATH="$PATH:/home/emirhan/.local/bin"
-eval "$(register-python-argcomplete pipx)"
-
 alias boot-bios='systemctl reboot --firmware-setup'
 alias boot-list='systemctl reboot --boot-loader-entry=help'
 alias boot-from='f() { systemctl reboot --boot-loader-entry=$1; }; f'
 
-export SUDO_PROMPT="$(tput setab 1 setaf 7 bold)[sudo]$(tput sgr0) $(tput setaf 6)password for$(tput sgr0) $(tput setaf 5)%p$(tput sgr0): "
-
 DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+
+# Created by `pipx` on 2023-12-21 00:58:19
+export PATH="$PATH:/home/emirhan/.local/bin"
+eval "$(register-python-argcomplete pipx)"
+
+export SUDO_PROMPT="$(tput setab 1 setaf 7 bold)[sudo]$(tput sgr0) password for $(tput setaf 5)%p$(tput sgr0): "
+export EDITOR=nano
 
 function ipv4() {
     max=$(ip -o -4 addr show | awk '{print length($2)}' | sort -nr | head -n1)
