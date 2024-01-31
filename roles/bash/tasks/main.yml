@@ -1,0 +1,9 @@
+---
+- name: Deploy .bashrc to user's home
+  copy:
+      src: .bashrc
+      dest: "~/.bashrc"
+      owner: "{{ user }}"
+      mode: "0644"
+  become: yes
+  become_user: "{{ user }}"
