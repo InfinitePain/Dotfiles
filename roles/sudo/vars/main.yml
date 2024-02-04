@@ -1,9 +1,9 @@
 ---
 sudo_users:
-    - name: "emirhan"
-      sudo_nopasswd_commands:
-          - "/usr/bin/halt"
-          - "/usr/bin/poweroff"
-          - "/usr/bin/reboot"
-          - "/usr/bin/shutdown"
-          - "/usr/bin/podman"
+  - name: "emirhan"
+    sudo_nopasswd_commands:
+      - "/usr/bin/halt"
+      - "/usr/bin/poweroff"
+      - "/usr/bin/reboot"
+      - "/usr/bin/shutdown"
+      - "/usr/bin/podman"

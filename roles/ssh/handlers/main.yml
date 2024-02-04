@@ -1,8 +1,7 @@
 ---
-- name: restart sshd
-  service:
-      name: "sshd"
-      state: restarted
+- name: Restart sshd
+  ansible.builtin.service:
+    name: "sshd"
+    state: restarted
   when: "'sshd.service' in ansible_facts.services and ansible_facts.services['sshd.service'].state == 'running'"
-  become: yes
-
+  become: true

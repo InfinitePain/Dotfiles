@@ -1,29 +1,29 @@
 ---
 - name: Deploy sudoers file
-  copy:
-      src: sudoers
-      dest: /etc/sudoers
-      validate: "visudo -cf %s"
-      owner: root
-      group: root
-      mode: "0440"
-  become: yes
+  ansible.builtin.copy:
+    src: sudoers
+    dest: /etc/sudoers
+    validate: "visudo -cf %s"
+    owner: root
+    group: root
+    mode: "0440"
+  become: true
 
 - name: Create sudoers.d directory
-  file:
-      path: /etc/sudoers.d
-      state: directory
-      owner: root
-      group: root
-      mode: "0755"
-  become: yes
+  ansible.builtin.file:
+    path: /etc/sudoers.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
 
 - name: Deploy user-specific sudoers files
-  template:
-      src: user_sudoers.j2
-      dest: "/etc/sudoers.d/{{ item.name }}"
-      owner: root
-      group: root
-      mode: "0440"
+  ansible.builtin.template:
+    src: user_sudoers.j2
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    owner: root
+    group: root
+    mode: "0440"
   loop: "{{ sudo_users }}"
-  become: yes
+  become: true
