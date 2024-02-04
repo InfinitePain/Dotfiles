@@ -2,3 +2,4 @@
 user: emirhan
 package_manager: pacman
 shell: zsh
+oh_my_posh: true

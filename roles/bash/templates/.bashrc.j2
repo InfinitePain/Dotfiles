@@ -21,6 +21,9 @@ eval "$(register-python-argcomplete pipx)"
 
 export SUDO_PROMPT="$(tput setab 1 setaf 7 bold)[sudo]$(tput sgr0) password for $(tput setaf 5)%p$(tput sgr0): "
 export EDITOR=nano
+{% if oh_my_posh %}
+eval "$(oh-my-posh init bash)"
+{% endif %}
 
 function ipv4() {
     max=$(ip -o -4 addr show | awk '{print length($2)}' | sort -nr | head -n1)

@@ -48,6 +48,10 @@ bindkey -v
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+{% if oh_my_posh %}
+# Set the prompt theme
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/themes/infinite.omp.json)"
+{% endif %}
 
 # Customize the command prompt appearance
 PROMPT='[%n@%m %~]$ '
