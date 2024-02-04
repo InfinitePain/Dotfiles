@@ -1,3 +1,4 @@
 ---
 user: emirhan
 package_manager: pacman
+shell: zsh

@@ -1,0 +1,165 @@
+#-----------------------------
+# Completion System
+#-----------------------------
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' file-sort name
+zstyle ':completion:*' ignore-parents parent pwd directory
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle ':completion:*' original false
+zstyle ':completion:*' squeeze-slashes true
+zstyle :compinstall filename '/home/emirhan/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# pipx completions
+autoload -U bashcompinit && bashcompinit
+eval "$(register-python-argcomplete pipx)"
+
+#-----------------------------
+# Environment Variables
+#-----------------------------
+
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export PATH="$PATH:/home/emirhan/.local/bin"
+export EDITOR=nano
+export SUDO_PROMPT="$(tput setab 1 setaf 7 bold)[sudo]$(tput sgr0) password for $(tput setaf 5)%p$(tput sgr0): "
+
+#-----------------------------
+# General Shell Settings
+#-----------------------------
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt beep nomatch
+unsetopt autocd extendedglob notify
+bindkey -v
+# End of lines configured by zsh-newuser-install
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Customize the command prompt appearance
+PROMPT='[%n@%m %~]$ '
+{% if package_manager == "pacman" %}
+{% raw %}
+# Rehash zsh's hash table on receiving USR1, useful with pacman hook 
+# to update command paths.
+TRAPUSR1() { rehash }
+{% endraw %}
+{% endif %}
+
+#-----------------------------
+# Aliases
+#-----------------------------
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias boot-bios='systemctl reboot --firmware-setup'
+alias boot-list='systemctl reboot --boot-loader-entry=help'
+alias boot-from='f() { systemctl reboot --boot-loader-entry=$1; }; f'
+
+#-----------------------------
+# Functions
+#-----------------------------
+{% if package_manager == "pacman" %}
+{% raw %}
+# Suggests packages for missing commands using `pacman`
+function command_not_found_handler {
+    local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
+    printf 'zsh: command not found: %s\n' "$1"
+    local entries=(
+        ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"}
+    )
+    if (( ${#entries[@]} ))
+    then
+        printf "${bright}$1${reset} may be found in the following packages:\n"
+        local pkg
+        for entry in "${entries[@]}"
+        do
+            # (repo package version file)
+            local fields=(
+                ${(0)entry}
+            )
+            if [[ "$pkg" != "${fields[2]}" ]]
+            then
+                printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
+            fi
+            printf '    /%s\n' "${fields[4]}"
+            pkg="${fields[2]}"
+        done
+    fi
+    return 127
+}
+{% endraw %}
+{% endif %}
+
+# Display IPv4 addresses in a formatted manner
+function ipv4() {
+    max=$(ip -o -4 addr show | awk '{print length($2)}' | sort -nr | head -n1)
+    
+    ip -o -4 addr show | awk -v max=$max '
+    {
+        gsub("inet", "IPv4")
+        printf "%*s - %s: %s\n", max+1, $2, $3, $4
+    }'
+}
+
+# Display IPv6 addresses
+function ipv6() {
+    max=$(ip -o -6 addr show | awk '{print length($2)}' | sort -nr | head -n1)
+    
+    ip -o -6 addr show | awk -v max=$max '
+    {
+        gsub("inet6", "IPv6")
+        printf "%*s - %s: %s\n", max+1, $2, $3, $4
+    }'
+}
+
+# Generate a list of even numbers within a specified range
+function evens() {
+    local start end format="space"
+    for arg in "$@"; do
+        case $arg in
+            newline|comma) format=$arg ;;
+            *) if [[ -z $start ]]; then start=$arg; else end=$arg; fi ;;
+        esac
+    done
+    [[ $start -gt $end ]] && { local temp=$start; start=$end; end=$temp; }
+    if [[ $format == "newline" ]]; then
+        seq $start $end | awk '($1 % 2 == 0)'
+    elif [[ $format == "comma" ]]; then
+        seq $start $end | awk '($1 % 2 == 0)' | paste -sd, -
+    else
+        seq $start $end | awk '($1 % 2 == 0)' | paste -sd " " -
+    fi
+}
+
+# Generate a list of even numbers within a specified range
+function odds() {
+    local start end format="space"
+    for arg in "$@"; do
+        case $arg in
+            newline|comma) format=$arg ;;
+            *) if [[ -z $start ]]; then start=$arg; else end=$arg; fi ;;
+        esac
+    done
+    [[ $start -gt $end ]] && { local temp=$start; start=$end; end=$temp; }
+    if [[ $format == "newline" ]]; then
+        seq $start $end | awk '($1 % 2 != 0)'
+    elif [[ $format == "comma" ]]; then
+        seq $start $end | awk '($1 % 2 != 0)' | paste -sd, -
+    else
+        seq $start $end | awk '($1 % 2 != 0)' | paste -sd " " -
+    fi
+}
