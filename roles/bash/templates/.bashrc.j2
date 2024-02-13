@@ -13,8 +13,6 @@ alias boot-bios='systemctl reboot --firmware-setup'
 alias boot-list='systemctl reboot --boot-loader-entry=help'
 alias boot-from='f() { systemctl reboot --boot-loader-entry=$1; }; f'
 
-DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
-
 # Created by `pipx` on 2023-12-21 00:58:19
 export PATH="$PATH:/home/emirhan/.local/bin"
 eval "$(register-python-argcomplete pipx)"
