@@ -31,6 +31,7 @@ eval "$(register-python-argcomplete pipx)"
 export PATH="$PATH:/home/emirhan/.local/bin"
 export EDITOR=nano
 export SUDO_PROMPT="$(tput setab 1 setaf 7 bold)[sudo]$(tput sgr0) password for $(tput setaf 5)%p$(tput sgr0): "
+export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 #-----------------------------
 # General Shell Settings
@@ -44,6 +45,8 @@ setopt beep nomatch
 unsetopt autocd extendedglob notify
 bindkey -v
 # End of lines configured by zsh-newuser-install
+
+bindkey '^R' history-incremental-search-backward
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
