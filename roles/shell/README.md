@@ -1,6 +1,8 @@
-# Zsh
+# Shell
 
 Beside from some exports, there are some aliases and functions.
+
+If you see in the logs that the task `Deploy .profile for <shell> to user's home` is changed, you need to restart the system to apply the changes.
 
 ## Aliases
 

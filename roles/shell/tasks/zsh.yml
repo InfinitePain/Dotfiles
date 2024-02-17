@@ -1,0 +1,42 @@
+---
+- name: Install zsh
+  ansible.builtin.package:
+    name: zsh
+    state: present
+  become: true
+
+- name: Set zsh as the default shell for the user
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /usr/bin/zsh
+  become: true
+  become_user: root
+  when: shell == "zsh"
+
+- name: Deploy .zshrc files to user's home
+  ansible.builtin.template:
+    src: .zshrc.j2
+    dest: "~/.zshrc"
+    owner: "{{ user }}"
+    mode: "0644"
+  become: true
+  become_user: "{{ user }}"
+
+- name: Add pacman hook to update zsh completions
+  ansible.builtin.copy:
+    src: zsh-rehash.hook
+    dest: "/etc/pacman.d/hooks/zsh-rehash.hook"
+    owner: root
+    mode: "0644"
+  become: true
+  become_user: root
+  when: package_manager == "pacman"
+
+- name: Deploy .profile for zsh to user's home
+  ansible.builtin.copy:
+    src: .profile
+    dest: "~/.zprofile"
+    owner: "{{ user }}"
+    mode: "0644"
+  become: true
+  become_user: "{{ user }}"

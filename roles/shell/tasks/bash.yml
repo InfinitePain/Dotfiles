@@ -1,0 +1,26 @@
+---
+- name: Set bash as the default shell for the user
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /usr/bin/bash
+  become: true
+  become_user: root
+
+- name: Deploy .bashrc to user's home
+  ansible.builtin.template:
+    src: .bashrc.j2
+    dest: "~/.bashrc"
+    owner: "{{ user }}"
+    mode: "0644"
+  become: true
+  become_user: "{{ user }}"
+
+- name: Deploy .profile for bash to user's home
+  ansible.builtin.copy:
+    src: .profile
+    dest: "~/.profile"
+    owner: "{{ user }}"
+    mode: "0644"
+  become: true
+  become_user: "{{ user }}"
+  

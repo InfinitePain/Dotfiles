@@ -12,10 +12,8 @@
       ansible.builtin.service_facts:
 
   roles:
-    - role: bash
-      tags: bash
-    - role: zsh
-      tags: zsh
+    - role: shell
+      tags: shell
     - role: sudo
       tags: sudo
     - role: ssh

@@ -1,19 +1,10 @@
 ---
-- name: Deploy .bashrc to user's home
-  ansible.builtin.template:
-    src: .bashrc.j2
-    dest: "~/.bashrc"
-    owner: "{{ user }}"
-    mode: "0644"
-  become: true
-  become_user: "{{ user }}"
+- name: Setup ZSH
+  ansible.builtin.include_tasks: zsh.yml
+  when: shell == "zsh"
 
-- name: Set bash as the default shell for the user
-  ansible.builtin.user:
-    name: "{{ user }}"
-    shell: /usr/bin/bash
-  become: true
-  become_user: root
+- name: Setup Bash
+  ansible.builtin.include_tasks: bash.yml
   when: shell == "bash"
 
 - name: Install Oh My Posh if not present
