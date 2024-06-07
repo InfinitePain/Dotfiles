@@ -1,0 +1,13 @@
+---
+- name: Start pacman-refresh-file-db.service
+  ansible.builtin.service:
+    name: "pacman-refresh-file-db.service"
+    state: started
+  become: true
+
+- name: Enable pacman-refresh-file-db.timer
+  ansible.builtin.service:
+    name: "pacman-refresh-file-db.timer"
+    enabled: true
+    state: started
+  become: true

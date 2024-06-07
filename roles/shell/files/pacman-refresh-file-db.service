@@ -1,0 +1,6 @@
+[Unit]
+Description=Update Pacman File Database
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pacman -Fy

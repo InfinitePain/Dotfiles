@@ -266,5 +266,10 @@
             "type": "prompt"
         }
     ],
+    "transient_prompt": {
+        "background": "transparent",
+        "foreground": "#e0f8ff",
+        "template": "\u276f "
+    },
     "version": 2
 }

@@ -1,6 +1,6 @@
 # Dotfiles
 
-This is a collection of my dotfiles and a playbook to install them. Every configuration has its own role and can be installed individually.
+This is a collection of my dotfiles and a playbook to install them. Every configuration has its own role and can be installed individually. After running the playbook, you probably need to reboot your system to apply all changes.
 
 ```sh
 ansible-playbook main.yml --ask-become-pass

@@ -32,6 +32,28 @@
   become_user: root
   when: package_manager == "pacman"
 
+- name: Add systemd service to update Pacman File Database
+  ansible.builtin.copy:
+    src: pacman-refresh-file-db.service
+    dest: "/etc/systemd/system/pacman-refresh-file-db.service"
+    owner: root
+    mode: "0644"
+  become: true
+  become_user: root
+  notify: Start pacman-refresh-file-db.service
+  when: package_manager == "pacman"
+
+- name: Add systemd timer to update Pacman File Database
+  ansible.builtin.copy:
+    src: pacman-refresh-file-db.timer
+    dest: "/etc/systemd/system/pacman-refresh-file-db.timer"
+    owner: root
+    mode: "0644"
+  become: true
+  become_user: root
+  notify: Enable pacman-refresh-file-db.timer
+  when: package_manager == "pacman"
+
 - name: Deploy .profile for zsh to user's home
   ansible.builtin.copy:
     src: .profile

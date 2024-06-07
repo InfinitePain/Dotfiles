@@ -7,5 +7,5 @@
     owner: root
     group: root
     mode: "0644"
-  notify: restart sshd
+  notify: Restart sshd
   become: true
