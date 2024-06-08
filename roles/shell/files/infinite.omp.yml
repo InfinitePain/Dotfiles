@@ -1,0 +1,248 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+version: 2
+console_title_template: '{{ .Shell }} in {{ .Folder }}'
+# region blocks
+blocks:
+  # region block1
+  - type: prompt
+    newline: true
+    alignment: left
+    segments:
+      - type: text
+        style: plain
+        foreground: "#0077c2"
+        template: "\u256d\u2500" # ╭─
+
+      - type: shell
+        style: diamond
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b0" # 
+        foreground: "#0077c2"
+        background: "#0C212F"
+        template: "\uf120 {{ .Name }} " #  zsh
+
+      - type: path
+        style: diamond
+        leading_diamond: "<transparent,#0C212F>\ue0b0</>" # 
+        trailing_diamond: "\ue0b0" # 
+        foreground: "#FF9248"
+        background: "#0C212F"
+        template: " {{ .Path }} "
+        properties:
+          folder_separator_icon: "<transparent> \ue0b1 </>" # 
+          home_icon: "\ueb06" # 
+          folder_icon: "\uf07b " # 
+          style: agnoster_short
+          max_depth: 3
+          hide_root_location: true
+
+      - type: git
+        style: powerline
+        powerline_symbol: "\ue0b0" # 
+        foreground: "#FFFB38"
+        foreground_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) }}#ffeb95{{ end }}"
+          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#c5e478{{ end }}"
+          - "{{ if gt .Ahead 0 }}#C792EA{{ end }}"
+          - "{{ if gt .Behind 0 }}#C792EA{{ end }}"
+        background: "#0C212F"
+        template: "
+          {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}
+          {{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}
+          {{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}
+          {{ if .Staging.Changed }}<#ef5350> \uf046 {{ .Staging.String }}</>{{ end }}"
+        properties:
+          fetch_status: true
+          fetch_upstream_icon: true
+          branch_icon: "\ue725 " # 
+
+      - type: executiontime
+        style: diamond
+        foreground: "#83769c"
+        background: "#0C212F"
+        leading_diamond: "<transparent,#0C212F>\ue0b0</>" # 
+        trailing_diamond: "\ue0b4" # 
+        template: " \ueba2 {{ .FormattedMs }} " #  4ms
+        properties:
+          style: roundrock
+          threshold: 0
+
+      - type: status
+        style: diamond
+        foreground: "#ffffff"
+        background: "#910000"
+        leading_diamond: " \ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        template: "<transparent> \uf12a</> {{ reason .Code }} " #  ERROR
+  # endregion block1
+  # region block2
+  - type: prompt
+    alignment: right
+    segments:
+      - type: node
+        style: diamond
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        background: "#0C212F"
+        foreground: "#3C873A"
+        template: "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}" #  npm
+        properties:
+          fetch_package_manager: true
+          npm_icon: " <#cc3a3a>\ue5fa</> " # 
+          yarn_icon: " <#348cba>\ue6a7</>" # 
+
+      - type: python
+        background: "#0C212F"
+        foreground: "#FFE873"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}" #  Project 3.12.3
+
+      - type: java
+        background: "#0C212F"
+        foreground: "#ffffff"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue738 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Java 11.0.11
+
+      - type: dotnet
+        background: "#0C212F"
+        foreground: "#0d6da8"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue77f {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }}" #  .NET 5.0.301
+
+      - type: go
+        background: "#0C212F"
+        foreground: "#06aad5"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue626 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Go 1.16.5
+
+      - type: rust
+        background: "#0C212F"
+        foreground: "#925837"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Rust 1.53.0
+
+      - type: dart
+        background: "#0C212F"
+        foreground: "#055b9c"
+        leading_diamond: " \ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue798 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Dart 2.13.4
+
+      - type: angular
+        background: "#0C212F"
+        foreground: "#ce092f"
+        leading_diamond: " \ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue753 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Angular 12.0.3
+
+      - type: nx
+        background: "#0C212F"
+        foreground: "#ffffff"
+        leading_diamond: " \ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "{{ if .Error }}{{ .Error }}{{ else }}Nx {{ .Full }}{{ end }}" # Nx 12.0.3
+
+      - type: julia
+        background: "#0C212F"
+        foreground: "#359a25"
+        leading_diamond: " \ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "<#ca3c34>\ue624</> {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Julia 1.6.1
+
+      - type: ruby
+        background: "#0C212F"
+        foreground: "#9c1006"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue791 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Ruby 3.0.1
+
+      - type: azfunc
+        background: "#0C212F"
+        foreground: "#5398c2"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\uf104<#f5bf45>\uf0e7</>\uf105 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}" #  Azure Functions 4.0.1
+
+      - type: aws
+        background: "#0C212F"
+        foreground: "#faa029"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\ue7ad {{.Profile}}{{if .Region}}@{{.Region}}{{end}}" #  default@us-west-2
+
+      - type: kubectl
+        background: "#0C212F"
+        foreground: "#ffffff"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: "\uf308 {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}}" #  docker-desktop :: default
+
+      - type: time
+        background: "#0C212F"
+        foreground: "#ffffff"
+        leading_diamond: "\ue0b6" # 
+        trailing_diamond: "<transparent,#0C212F>\ue0b2</>" # 
+        style: diamond
+        template: " \uf073 {{ .CurrentDate | date .Format }} " #  Jan_2  15:04
+        properties:
+          time_format: "Jan_2  15:04"
+
+      - type: os
+        background: "#0C212F"
+        foreground: "#FEF5ED"
+        leading_diamond: "\ue0b2" # 
+        trailing_diamond: "\ue0b4" # 
+        style: diamond
+        template: " {{ if .WSL }}WSL at {{ end }}{{.Icon}} <#FEF5ED></>" # 
+        properties:
+          linux: "\ue712" # 
+          macos: "\ue711" # 
+          windows: "\ue70f" # 
+  # endregion block2
+  # region block3
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        style: plain
+        foreground: "#0077c2"
+        template: "\u2570\u2500" # ╰─
+
+      - type: status
+        style: plain
+        foreground: "#e0f8ff"
+        foreground_templates:
+          - "{{if gt .Code 0}}#910000{{end}}"
+          - "{{if eq .Code 0}}#e0f8ff{{end}}"
+        template: "\u276f " # ❯
+        properties:
+          always_enabled: true
+  # endregion block3
+# endregion blocks
+# region transient_prompt
+transient_prompt:
+  foreground: "#e0f8ff"
+  foreground_templates:
+    - "{{if gt .Code 0}}#910000{{end}}"
+    - "{{if eq .Code 0}}#e0f8ff{{end}}"
+  background: transparent
+  template: "\u276f " # ❯

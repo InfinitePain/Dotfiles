@@ -55,8 +55,8 @@
   when: package_manager == "pacman"
 
 - name: Deploy .profile for zsh to user's home
-  ansible.builtin.copy:
-    src: .profile
+  ansible.builtin.template:
+    src: .profile.j2
     dest: "~/.zprofile"
     owner: "{{ user }}"
     mode: "0644"

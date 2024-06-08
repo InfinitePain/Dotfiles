@@ -17,7 +17,7 @@
 
 - name: Deploy .profile for bash to user's home
   ansible.builtin.copy:
-    src: .profile
+    src: .profile.j2
     dest: "~/.profile"
     owner: "{{ user }}"
     mode: "0644"

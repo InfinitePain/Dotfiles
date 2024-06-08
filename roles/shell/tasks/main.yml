@@ -41,8 +41,8 @@
 
 - name: Copy Oh My Posh theme file to themes directory
   ansible.builtin.copy:
-    src: "infinite.omp.json"
-    dest: "/home/{{ user }}/.config/oh-my-posh/themes/infinite.omp.json"
+    src: "infinite.omp.yml"
+    dest: "/home/{{ user }}/.config/oh-my-posh/themes/infinite.omp.yml"
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: "0644"
