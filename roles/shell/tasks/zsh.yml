@@ -14,13 +14,23 @@
   when: shell == "zsh"
 
 - name: Deploy .zshrc files to user's home
-  ansible.builtin.template:
-    src: .zshrc.j2
+  ansible.builtin.copy:
+    src: .zshrc
     dest: "~/.zshrc"
     owner: "{{ user }}"
     mode: "0644"
   become: true
   become_user: "{{ user }}"
+
+- name: Ensure pacman hook directory exists
+  ansible.builtin.file:
+    path: "/etc/pacman.d/hooks"
+    state: directory
+    owner: root
+    mode: "0755"
+  become: true
+  become_user: root
+  when: package_manager == "pacman"
 
 - name: Add pacman hook to update zsh completions
   ansible.builtin.copy:

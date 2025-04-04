@@ -7,6 +7,15 @@
   ansible.builtin.include_tasks: bash.yml
   when: shell == "bash"
 
+- name: Ensure local bin directory exists
+  ansible.builtin.file:
+    path: "/home/{{ user }}/.local/bin"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ ansible_facts['user_gid'] }}"
+    mode: "0755"
+  become: true
+
 - name: Install Oh My Posh if not present
   ansible.builtin.shell: |
     if [ ! -f "/home/{{ user }}/.local/bin/oh-my-posh" ]; then
@@ -34,7 +43,7 @@
     path: "/home/{{ user }}/.config/oh-my-posh/themes"
     state: directory
     owner: "{{ user }}"
-    group: "{{ user }}"
+    group: "{{ ansible_facts['user_gid'] }}"
     mode: "0755"
   become: true
   when: oh_my_posh | bool
@@ -44,7 +53,7 @@
     src: "infinite.omp.yml"
     dest: "/home/{{ user }}/.config/oh-my-posh/themes/infinite.omp.yml"
     owner: "{{ user }}"
-    group: "{{ user }}"
+    group: "{{ ansible_facts['user_gid'] }}"
     mode: "0644"
   become: true
   when: oh_my_posh | bool
